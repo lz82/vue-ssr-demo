@@ -1,29 +1,52 @@
 const path = require('path');
 const webpack = require('webpack');
-const cleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir);
+}
+
 const config = {
   entry: {
     // app: './src/main.js'
-    app: path.resolve(__dirname, '../src/main.js')
+    main: path.resolve(__dirname, '../src/main.js')
   },
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, '../dist'),
+    filename: '[name].js'
+  },
+
+  resolve: {
+    extensions: ['.js', '.json', 'vue'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'views': resolve('/src/views'),
+      'less': resolve('/src/common/less'),
+      'common': resolve('/src/common'),
+      'router': resolve('/src/router'),
+      'components': resolve('/src/components')
+    }
   },
 
   module: {
     rules: [
     {
+      test: /\.(js|vue|jsx)$/,
+      use: 'eslint-loader',
+      exclude: [resolve('node_modules')],
+      enforce: 'pre'
+    },
+    {
       test: /\.js$/,
       use: 'babel-loader',
-      include: [path.resolve(__dirname, 'src')],
-      exclude: [path.resolve(__dirname, 'node_modules')]
+      include: [resolve('src')],
+      exclude: [resolve('node_modules')]
     },
     {
       test: /\.vue$/,
@@ -32,25 +55,31 @@ const config = {
     {
       test: /\.(jpg|png|jpeg|gif)$/,
       use: [
-        {
-          loader: 'url-loader',
-          options: {
-            limit: 10,
-            name: '[name].min.[ext]'
-          }
-        },
-        'file-loader'
+      {
+        loader: 'url-loader',
+        options: {
+          limit: 10,
+          name: '[name].min.[ext]'
+        }
+      },
+      'file-loader'
       ]
     }]
   },
 
   plugins: [
-    new cleanWebpackPlugin(['dist']), // 清理打包目录
+  new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
+    root: path.resolve(__dirname, '../')
+    }), // 清理打包目录
+
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+  }),
 
     new VueLoaderPlugin(), // vue-loader 配套
 
     new HtmlWebpackPlugin() // html
-  ]
-};
+    ]
+  };
 
-module.exports = config;
+  module.exports = config;

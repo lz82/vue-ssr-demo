@@ -1,13 +1,19 @@
 <template>
 	<div id="app">
-		this is app!
+		this is app! aaaaa
 	</div>
 </template>
 
 <script>
-	export default {
-		name: 'app'
-	}
+  import _ from 'lodash';
+  export default {
+    name: 'app',
+
+    mounted () {
+      console.log('process.env.NODE_ENV:',     process.env.NODE_ENV);
+      console.log(_.join(['a', 'b', 'c']));
+    }
+  };
 </script>
 
 <style></style>

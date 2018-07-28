@@ -2,7 +2,6 @@ const baseConfig = require('./webpack.base.config.js');
 
 const webpack = require('webpack');
 const WebpackMerge = require('webpack-merge');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = WebpackMerge(baseConfig, {
   mode: 'development',
@@ -22,7 +21,7 @@ const config = WebpackMerge(baseConfig, {
     {
       test: /\.css$/,
       use: [
-      MiniCssExtractPlugin.loader,
+      'style-loader',
       'css-loader',
       'postcss-loader'
       ]
@@ -30,7 +29,7 @@ const config = WebpackMerge(baseConfig, {
     {
       test: /\.less$/,
       use: [
-      MiniCssExtractPlugin.loader,
+      'style-loader',
       'css-loader',
       'postcss-loader',
       'less-loader']
@@ -39,8 +38,6 @@ const config = WebpackMerge(baseConfig, {
   },
 
   plugins: [
-    new MiniCssExtractPlugin(), // 把css文件单独打包
-
     new webpack.NamedModulesPlugin(),
 
     new webpack.HotModuleReplacementPlugin() // 开启HRM，热更新
