@@ -13,7 +13,8 @@ function resolve (dir) {
 const config = {
   entry: {
     // app: './src/main.js'
-    main: path.resolve(__dirname, '../src/main.js')
+    // main: path.resolve(__dirname, '../src/main.js')
+    app: path.resolve(__dirname, '../src/vueInstance.js')
   },
 
   output: {
@@ -78,7 +79,9 @@ const config = {
 
     new VueLoaderPlugin(), // vue-loader 配套
 
-    new HtmlWebpackPlugin() // html
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../index.html')
+    }) // html
     ]
   };
 
