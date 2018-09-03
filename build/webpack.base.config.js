@@ -14,7 +14,16 @@ const config = {
   entry: {
     // app: './src/main.js'
     // main: path.resolve(__dirname, '../src/main.js')
-    app: path.resolve(__dirname, '../src/vueInstance.js')
+    // app: path.resolve(__dirname, '../src/vueInstance.js')
+    // app: path.resolve(__dirname, '../src/vueDatabind')
+    // app: path.resolve(__dirname, '../src/ssr.js')
+    // app: path.resolve(__dirname, '../src/vueExtend.js')
+    // app: path.resolve(__dirname, '../src/vModel.js')
+    // app: path.resolve(__dirname, '../src/vueSlot.js')
+    // app: path.resolve(__dirname, '../src/vueTransition.js')
+    // app: path.resolve(__dirname, '../src/vueMixin.js')
+    // app: path.resolve(__dirname, '../src/vueDirective.js')
+    app: path.resolve(__dirname, '../src/vueRender.js')
   },
 
   output: {

@@ -1,8 +1,9 @@
 const baseConfig = require('./webpack.base.config.js');
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const WebpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PrerenderSpaPlugin = require('prerender-spa-plugin');
 
 const config = WebpackMerge(baseConfig, {
   mode: 'production',
@@ -37,7 +38,11 @@ const config = WebpackMerge(baseConfig, {
   },
 
   plugins: [
-  new MiniCssExtractPlugin()
+  new MiniCssExtractPlugin(),
+
+  new PrerenderSpaPlugin({
+    staticDir: path.resolve(__dirname, '../dist')
+  })
   ]
 
 });

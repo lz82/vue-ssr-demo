@@ -1,0 +1,47 @@
+import Koa from 'koa2';
+
+import Router from 'koa-router';
+
+import Vue from 'vue';
+import fs from 'fs';
+import path from 'path';
+
+// import ServerRender from 'vue-server-renderer';
+const ServerRender = require('vue-server-renderer'); // 不能以import的方式引入
+
+const app = new Koa();
+
+const router = new Router();
+
+router.get('/', (ctx, next) => {
+  const app = new Vue({
+    template: '<div>this is from vue-server-renderer</div>'
+  });
+
+  // const render = ServerRender.createRenderer();
+  const template = fs.readFileSync(path.resolve(__dirname, './template/homepage.template.html'), 'utf-8');
+  console.log(template);
+  const render = ServerRender.createRenderer({
+    template: template
+  });
+
+  render.renderToString(app, (err, html) => {
+    if (err) {
+      ctx.status = 500;
+      ctx.body = 'Internal Server Error';
+      throw err;
+    }
+    ctx.status = 200;
+    // ctx.body = `<!DOCTYPE html>
+    // <html lang="en">
+    // <head><title>Hello</title></head>
+    // <body>${html}</body>
+    // </html>`;
+    ctx.body = html;
+  });
+});
+
+app
+.use(router.routes())
+.use(router.allowedMethods())
+.listen(4000);
