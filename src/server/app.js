@@ -25,19 +25,24 @@ router.get('/', (ctx, next) => {
     template: template
   });
 
-  render.renderToString(app, (err, html) => {
-    if (err) {
-      ctx.status = 500;
-      ctx.body = 'Internal Server Error';
-      throw err;
-    }
+  const context = {
+    title: 'vue ssr demo',
+    meta: `
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="description" content="Vue.js 服务端渲染指南">
+          `
+  };
+
+  render.renderToString(app, context)
+  .then(html => {
     ctx.status = 200;
-    // ctx.body = `<!DOCTYPE html>
-    // <html lang="en">
-    // <head><title>Hello</title></head>
-    // <body>${html}</body>
-    // </html>`;
     ctx.body = html;
+  })
+  .catch(err => {
+    ctx.status = 500;
+    ctx.body = 'Internal Server Error';
+    throw err;
   });
 });
 

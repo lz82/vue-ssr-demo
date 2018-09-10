@@ -4,6 +4,9 @@ const path = require('path');
 const WebpackMerge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PrerenderSpaPlugin = require('prerender-spa-plugin');
+const Renderer = PrerenderSpaPlugin.PuppeteerRenderer;
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = WebpackMerge(baseConfig, {
   mode: 'production',
@@ -40,8 +43,18 @@ const config = WebpackMerge(baseConfig, {
   plugins: [
   new MiniCssExtractPlugin(),
 
+  // new BundleAnalyzerPlugin({
+  //   analyzerPort: 8899
+  // }),
+
   new PrerenderSpaPlugin({
-    staticDir: path.resolve(__dirname, '../dist')
+    staticDir: path.resolve(__dirname, '../dist'),
+    routes: ['', '/home', '/about', '/home/edit', '/home/preview'],
+    render: new Renderer({
+      renderAfterTime: 20000,
+      headless: true,
+      renderAfterDocumentEvent: 'render-event'
+    })
   })
   ]
 

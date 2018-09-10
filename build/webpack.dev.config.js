@@ -13,7 +13,8 @@ const config = WebpackMerge(baseConfig, {
     overlay: {
       errors: true
     },
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
 
   module: {

@@ -1,40 +1,40 @@
 <template>
-	<div id="app">
+  <div class="container">
     <img :src="pic" alt="" v-show="pic">
+    url:{{url}}
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-  // import _ from 'lodash';
+  import axios from 'axios';
   export default {
-    name: 'app',
+    name: 'HomePage',
 
     data () {
       return {
-        list: [],
-        pic: ''
+        pic: '',
+        url: ''
       };
     },
 
     mounted () {
-      // console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-      // console.log(_.join(['a', 'b', 'c']));
       this.$nextTick(() => {
         axios.get('https://api.github.com/users/lz82')
         .then(res => {
           console.log(res);
           this.pic = res.data.avatar_url;
           this.url = res.data.url;
+          this.$nextTick(() => {
+            document.dispatchEvent(new Event('render-event'));
+          });
           // document.dispatchEvent(new Event('render-event'));
         });
       });
-    },
-
-    methods: {
     }
   };
 </script>
 
-<style></style>
+<style scoped lang="less">
+
+</style>
