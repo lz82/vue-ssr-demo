@@ -2,9 +2,14 @@ import Koa from 'koa2';
 
 import Router from 'koa-router';
 
-import Vue from 'vue';
 import fs from 'fs';
 import path from 'path';
+
+// import axios from 'axios';
+
+import createApp from '../app.js';
+
+console.log(createApp);
 
 // import ServerRender from 'vue-server-renderer';
 const ServerRender = require('vue-server-renderer'); // 不能以import的方式引入
@@ -13,31 +18,58 @@ const app = new Koa();
 
 const router = new Router();
 
-router.get('/', (ctx, next) => {
-  const app = new Vue({
-    template: '<div>this is from vue-server-renderer</div>'
-  });
+router.get('*', (ctx, next) => {
+  // const app = new Vue({
+  //   template: `
+  //               <div >
+  //                 this is from vue-server-renderer
+  //                 url:{{url}}
+  //               </div>
+  //             `,
+
+  //   data () {
+  //     return {
+  //       url: ''
+  //     };
+  //   },
+
+  //   created () {
+  //     // this.$nextTick(() => {
+  //       axios.get('https://api.github.com/users/lz82')
+  //       .then(res => {
+  //         this.url = res.data.url;
+  //         console.log(this.url);
+  //       });
+  //     // });
+  //     // this.url = ctx.request.header.host;
+  //   }
+  // });
+  const app = createApp(ctx);
 
   // const render = ServerRender.createRenderer();
   const template = fs.readFileSync(path.resolve(__dirname, './template/homepage.template.html'), 'utf-8');
-  console.log(template);
   const render = ServerRender.createRenderer({
     template: template
   });
 
-  render.renderToString(app, (err, html) => {
-    if (err) {
-      ctx.status = 500;
-      ctx.body = 'Internal Server Error';
-      throw err;
-    }
+  const content = {
+    title: 'this is ssr demo',
+    meta: `
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="description" content="Vue.js 服务端渲染指南">
+          `
+  };
+
+  render.renderToString(app, content)
+  .then(html => {
     ctx.status = 200;
-    // ctx.body = `<!DOCTYPE html>
-    // <html lang="en">
-    // <head><title>Hello</title></head>
-    // <body>${html}</body>
-    // </html>`;
     ctx.body = html;
+  })
+  .catch(err => {
+    ctx.status = 500;
+    ctx.body = 'Internal Server Error';
+    throw err;
   });
 });
 

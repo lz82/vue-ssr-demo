@@ -9,11 +9,12 @@
     "webpack": "webpack",
     "dev": "cross-env NODE_ENV=development  webpack-dev-server --process --inline --config ./build/webpack.dev.config.js --open",
     "build": "cross-env NODE_ENV=production webpack --config ./build/webpack.pro.config.js",
+    "build-server": "cross-env NODE_ENV=production webpack --config ./build/webpack.server.config.js",
     "build:qa": "cross-env NODE_ENV=qa webpack --config ./build/webpack.qa.config.js",
     "lint": "eslint --ext .js --ext .vue --ext .jsx  src/",
     "lint:fix": "eslint --ext .js --ext .vue --ext .jsx  src/ --fix",
     "precommit": "npm run lint:fix",
-    "server": "nodemon ./src/server/entry.js"
+    "server": "nodemon ./dist/server.js"
   },
   "author": "",
   "license": "ISC",

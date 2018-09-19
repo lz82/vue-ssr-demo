@@ -8,11 +8,11 @@ const app = new Vue({
 
 const render = ServerRender.createRenderer();
 
-
-render.renderToString(app, (err, html) => {
-  if (err) {
-    console.log(err);
-    throw err;
-  }
+render.renderToString(app)
+.then(html => {
   console.log(html);
+})
+.catch(err => {
+  console.log(err);
+  throw err;
 });
