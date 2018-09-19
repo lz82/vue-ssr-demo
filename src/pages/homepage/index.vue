@@ -1,50 +1,40 @@
 <template>
-	<div id="app">
-<<<<<<< HEAD
-    this is app.
-    <notify content="test"></notify>
-=======
+  <div class="container">
     <img :src="pic" alt="" v-show="pic">
+    url:{{url}}
     <router-view></router-view>
->>>>>>> 4a61f016465aa817a20b68b28edb39e6fa93a097
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-  // import _ from 'lodash';
-  import Notify from './components/notify/index.vue';
+  import axios from 'axios';
   export default {
-    name: 'app',
-
-    components: {
-      Notify
-    },
+    name: 'HomePage',
 
     data () {
       return {
-        list: [],
-        pic: ''
+        pic: '',
+        url: ''
       };
     },
 
     mounted () {
-      // console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-      // console.log(_.join(['a', 'b', 'c']));
       this.$nextTick(() => {
         axios.get('https://api.github.com/users/lz82')
         .then(res => {
           console.log(res);
           this.pic = res.data.avatar_url;
           this.url = res.data.url;
+          this.$nextTick(() => {
+            document.dispatchEvent(new Event('render-event'));
+          });
           // document.dispatchEvent(new Event('render-event'));
         });
       });
-    },
-
-    methods: {
     }
   };
 </script>
 
-<style></style>
+<style scoped lang="less">
+
+</style>

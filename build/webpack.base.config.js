@@ -16,7 +16,7 @@ const config = {
     main: path.resolve(__dirname, '../src/main.js')
     // app: path.resolve(__dirname, '../src/vueInstance.js')
     // app: path.resolve(__dirname, '../src/vueDatabind')
-    // app: path.resolve(__dirname, '../src/ssr.js')
+    app: path.resolve(__dirname, '../src/ssr.js')
     // app: path.resolve(__dirname, '../src/vueExtend.js')
     // app: path.resolve(__dirname, '../src/vModel.js')
     // app: path.resolve(__dirname, '../src/vueSlot.js')
@@ -28,11 +28,12 @@ const config = {
 
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/'
   },
 
   resolve: {
-    extensions: ['.js', '.json', 'vue'],
+    extensions: ['.js', '.json', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
@@ -40,7 +41,8 @@ const config = {
       'less': resolve('/src/common/less'),
       'common': resolve('/src/common'),
       'router': resolve('/src/router'),
-      'components': resolve('/src/components')
+      'components': resolve('/src/components'),
+      'pages': resolve('/src/pages')
     }
   },
 
