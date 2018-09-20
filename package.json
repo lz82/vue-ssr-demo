@@ -14,12 +14,8 @@
     "lint": "eslint --ext .js --ext .vue --ext .jsx  src/",
     "lint:fix": "eslint --ext .js --ext .vue --ext .jsx  src/ --fix",
     "precommit": "npm run lint:fix",
-<<<<<<< HEAD
-    "server": "nodemon ./dist/server.js"
-=======
     "server": "nodemon ./src/server/entry.js",
     "hs": "http-server ./dist"
->>>>>>> 4a61f016465aa817a20b68b28edb39e6fa93a097
   },
   "author": "",
   "license": "ISC",

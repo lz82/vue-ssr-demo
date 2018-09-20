@@ -1,18 +1,11 @@
 <template>
 	<div id="app">
-<<<<<<< HEAD
     this is app.
-    <notify content="test"></notify>
-=======
-    <img :src="pic" alt="" v-show="pic">
-    <router-view></router-view>
->>>>>>> 4a61f016465aa817a20b68b28edb39e6fa93a097
+    <notify :content="content" :styleList="style" :isShow="isShow" @close="onCloseNotify"></notify>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-  // import _ from 'lodash';
   import Notify from './components/notify/index.vue';
   export default {
     name: 'app',
@@ -23,26 +16,23 @@ import axios from 'axios';
 
     data () {
       return {
-        list: [],
-        pic: ''
+        style: {
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px'
+        },
+        content: 'this is a notify...',
+        isShow: true
       };
     },
 
     mounted () {
-      // console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-      // console.log(_.join(['a', 'b', 'c']));
-      this.$nextTick(() => {
-        axios.get('https://api.github.com/users/lz82')
-        .then(res => {
-          console.log(res);
-          this.pic = res.data.avatar_url;
-          this.url = res.data.url;
-          // document.dispatchEvent(new Event('render-event'));
-        });
-      });
     },
 
     methods: {
+      onCloseNotify () {
+        this.isShow = false;
+      }
     }
   };
 </script>

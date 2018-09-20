@@ -1,8 +1,10 @@
 <template>
-  <div class="container">
-    <span class="content">{{content}}</span>
-    <a class="btn" @click="handleClose">{{btn}}</a>
-  </div>
+  <transition name="fade" @after-leave="afterLeave" @after-enter="afterEnter">
+    <div class="container" :style="styleList" v-show="isShow">
+      <span class="content">{{content}}</span>
+      <a class="btn" @click="handleClose">{{btn}}</a>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -21,10 +23,26 @@
       }
     },
 
+    data () {
+      return {
+        isShow: true,
+        styleList: {}
+      };
+    },
+
     methods: {
       handleClose (e) {
         e.preventDefault();
+        this.isShow = false;
         this.$emit('close');
+      },
+
+      afterLeave () {
+        console.log('afterLeave');
+      },
+
+      afterEnter () {
+        console.log('after Enter');
       }
     }
   };
