@@ -1,28 +1,18 @@
 <template>
 	<div id="app">
     this is app.
-    <notify :content="content" :styleList="style" :isShow="isShow" @close="onCloseNotify"></notify>
+    <!-- <notify :content="content" :styleList="style" :isShow="isShow" @close="onCloseNotify"></notify> -->
+    <button @click="notify">notify</button>
   </div>
 </template>
 
 <script>
-  import Notify from './components/notify/index.vue';
+  // import Notify from './components/notify/index.vue';
   export default {
     name: 'app',
 
-    components: {
-      Notify
-    },
-
     data () {
       return {
-        style: {
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px'
-        },
-        content: 'this is a notify...',
-        isShow: true
       };
     },
 
@@ -30,8 +20,10 @@
     },
 
     methods: {
-      onCloseNotify () {
-        this.isShow = false;
+      notify () {
+        this.$notify({
+          content: 'this is service call.'
+        });
       }
     }
   };

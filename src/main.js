@@ -5,6 +5,10 @@ import router from './router';
 
 import './assets/style/less/main.less';
 
+import Notify from './components/notify/index.js';
+
+Vue.use(Notify);
+
 /* eslint-disable no-new */
 // const app = new Vue({
 //   template: '<app/>',

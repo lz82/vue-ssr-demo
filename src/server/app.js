@@ -52,13 +52,8 @@ router.get('*', (ctx, next) => {
     template: template
   });
 
-<<<<<<< HEAD
   const content = {
     title: 'this is ssr demo',
-=======
-  const context = {
-    title: 'vue ssr demo',
->>>>>>> 4a61f016465aa817a20b68b28edb39e6fa93a097
     meta: `
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -66,11 +61,8 @@ router.get('*', (ctx, next) => {
           `
   };
 
-<<<<<<< HEAD
   render.renderToString(app, content)
-=======
-  render.renderToString(app, context)
->>>>>>> 4a61f016465aa817a20b68b28edb39e6fa93a097
+
   .then(html => {
     ctx.status = 200;
     ctx.body = html;

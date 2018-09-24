@@ -1,21 +1,54 @@
-import Notify from '.index.vue';
+// 扩展notify组件
+import Notify from './index.vue';
 
 export default {
-  extend: Notify,
+  // https://cn.vuejs.org/v2/api/#extends
+  extends: Notify,
 
   data () {
     return {
-      verticalOffset: 0
+      timer: null,
+      verticalOffset: 0,
+      height: 0,
+      autoClose: 3000
     };
   },
 
-  computed: {
-    style () {
-      return {
-        position: 'fixed',
-        right: '20px',
-        bottom: `${this.verticalOffset}`
-      }
+  mounted () {
+    this.createTime();
+  },
+
+  beforeDestroy () {
+    this.clearTime();
+  },
+
+  methods: {
+    createTime () {
+      if (this.autoClose) {
+       this.timer = setTimeout(() => {
+        this.isShow = false;
+      }, this.autoClose);
+     }
+   },
+
+   clearTime () {
+    if (this.timer) {
+      clearTimeout(this.timer);
     }
+  },
+
+  afterEnter () {
+    this.height = this.$el.offsetHeight;
   }
+},
+
+computed: {
+  style () {
+    return {
+      position: 'fixed',
+      right: '20px',
+      bottom: `${this.verticalOffset}px`
+    };
+  }
+}
 };
